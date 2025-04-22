@@ -80,7 +80,7 @@ O sistema foi dividido em duas partes: uma interface visual (Frontend) disponív
 ### ✅ Teste da Interface (Frontend)
 
 - Acesse a interface diretamente pelo link:  
-  🔗 [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/petshop-agendamentos/)
+  🔗 [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/petshop-agendamento/)
 
 - Você poderá navegar pelas telas de login, cadastro, agendamento e listagem.
 
