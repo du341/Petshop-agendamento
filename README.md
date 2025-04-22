@@ -72,11 +72,71 @@ Este sistema foi desenvolvido para facilitar o agendamento de banhos em pet shop
 
 
 ---
-## 🔗 Acesse o Projeto no GitHub
+
+## 🧪 Como Testar o Sistema
+
+O sistema foi dividido em duas partes: uma interface visual (Frontend) disponível via GitHub Pages e um backend funcional (Node.js + MySQL) que precisa ser executado localmente.
+
+### ✅ Teste da Interface (Frontend)
+
+- Acesse a interface diretamente pelo link:  
+  🔗 [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/petshop-agendamentos/)
+
+- Você poderá navegar pelas telas de login, cadastro, agendamento e listagem.
+
+- ⚠️ **Importante:** Como o GitHub Pages é apenas visual, as funcionalidades de cadastro, login e agendamento não funcionarão nesse ambiente sem o backend ativo.
+
+---
+
+### 🖥️ Teste Completo com Backend (Local)
+
+Para testar o sistema com todas as funcionalidades funcionando (cadastro, login, agendamento, edição, exclusão):
+
+1. **Clone o repositório:**
+
+---
+
+2. **Instale as dependências do backend:**
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+3. **Configure o ambiente criando o arquivo `.env`:**
+
+   Dentro da pasta `backend`, crie um arquivo `.env` com os seguintes dados:
+
+   ```
+   DB_HOST=localhost
+   DB_USER=seu_usuario_mysql
+   DB_PASSWORD=sua_senha_mysql
+   DB_NAME=petshop
+   JWT_SECRET=sua_chave_secreta
+   ```
+
+4. **Crie o banco de dados:**
+
+   Execute o arquivo `banco_petshop.sql` no seu MySQL para criar as tabelas e índices necessários.
+
+5. **Inicie o servidor backend:**
+
+   ```bash
+   node server.js
+   ```
+
+---
+
+### 🧪 Testes com Postman (opcional)
+
+Você também pode testar os endpoints diretamente usando o Postman:
+
+- `POST /api/auth/register` – Cadastro de usuário  
+- `POST /api/auth/login` – Login e geração de token  
+- `POST /api/agendamentos` – Criar novo agendamento  
+- `GET /api/agendamentos` – Listar agendamentos do usuário logado  
+- `PUT /api/agendamentos/:id` – Editar agendamento  
+- `DELETE /api/agendamentos/:id` – Excluir agendamento
 
 
-- 🌐 Acesse a interface do sistema (GitHub Pages):  
-  [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/Petshop-agendamento/)
 
-- 📁 Repositório completo com frontend, backend e banco de dados:  
-  [https://github.com/du341/petshop-agendamentos](https://github.com/du341/petshop-agendamento)
