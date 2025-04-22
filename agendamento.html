@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendar Banho</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Agendamento de Banho</h1>
+
+    <form id="formAgendamento" enctype="multipart/form-data">
+      <input type="text" name="nome_pet" placeholder="Nome do pet" required><br>
+      <input type="text" name="raca" placeholder="Raça" required><br>
+      <input type="date" name="data_banho" required><br>
+      <input type="time" name="horario" required><br>
+      <textarea name="observacoes" placeholder="Observações"></textarea><br>
+      
+      <input type="file" name="imagem" id="imagem" accept="image/*" required><br>
+      <img id="previewImagem" style="max-width: 300px; display: none; margin-top: 10px;"><br>
+
+      <button type="submit">Agendar</button>
+    </form>
+  </div>
+
+  <script>
+    // Envio do formulário
+    const form = document.getElementById('formAgendamento');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Você precisa estar logado!');
+        return;
+      }
+
+      const formData = new FormData(form);
+
+      const resposta = await fetch('http://localhost:3000/api/agendamentos', {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + token
+        },
+        body: formData
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        alert('Agendamento criado com sucesso!');
+        form.reset();
+        document.getElementById('previewImagem').style.display = 'none'; // esconde preview
+      } else {
+        alert(dados.mensagem || dados.erro || 'Erro ao agendar.');
+      }
+    });
+
+    // Preview da imagem
+    document.getElementById('imagem').addEventListener('change', function(event) {
+      const preview = document.getElementById('previewImagem');
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

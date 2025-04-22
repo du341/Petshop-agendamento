@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro - PetShop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro</h1>
+    <form id="cadastroForm">
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="senha" placeholder="Senha" required><br>
+      <button type="submit">Cadastrar</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('cadastroForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      const resposta = await fetch('http://localhost:3000/api/auth/cadastrar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        alert('Cadastro realizado com sucesso!');
+        window.location.href = 'login.html';
+      } else {
+        alert(dados.mensagem || 'Erro ao cadastrar.');
+      }
+    });
+  </script>
+</body>
+</html>

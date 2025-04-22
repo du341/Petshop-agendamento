@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - PetShop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required><br>
+      
+      <input type="password" id="senha" placeholder="Senha" required><br>
+      <label style="font-size: 14px;">
+        <input type="checkbox" onclick="toggleSenha()"> Mostrar senha
+      </label><br>
+
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <script>
+    // Função de mostrar/esconder senha
+    function toggleSenha() {
+      const senha = document.getElementById("senha");
+      senha.type = senha.type === "password" ? "text" : "password";
+    }
+
+    // Envio do formulário
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      const resposta = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        alert('Login realizado com sucesso!');
+        localStorage.setItem('token', dados.token);
+        window.location.href = 'agendamento.html'; // Redireciona para a página de agendamento
+      } else {
+        alert(dados.mensagem || 'Erro ao fazer login.');
+      }
+    });
+  </script>
+</body>
+</html>
