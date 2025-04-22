@@ -112,7 +112,7 @@ petshop-agendamentos/
   [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/petshop-agendamentos/)
 
 - 📁 Repositório completo com frontend, backend e banco de dados:  
-  [https://github.com/du341/petshop-agendamentos](https://github.com/du341/petshop-agendamentos)
+  [https://github.com/du341/petshop-agendamentos](https://github.com/du341/Petshop-agendamento)
 
 
 
