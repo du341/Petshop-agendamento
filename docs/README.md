@@ -109,7 +109,7 @@ petshop-agendamentos/
 ## 🔗 Links para Avaliação
 
 - 🌐 Acesse a interface do sistema (GitHub Pages):  
-  [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/petshop-agendamentos/)
+  [https://du341.github.io/petshop-agendamentos/](https://du341.github.io/Petshop-agendamento/)
 
 - 📁 Repositório completo com frontend, backend e banco de dados:  
   [https://github.com/du341/petshop-agendamentos](https://github.com/du341/Petshop-agendamento)
