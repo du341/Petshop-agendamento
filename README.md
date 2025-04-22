@@ -5,7 +5,7 @@
 </p>
 
 
-## 🎮 Nexus-aventureiro-digital - Desafio do Aventureiro Digital
+
 
 ## 👥 Integrantes: <a href="https://www.linkedin.com/in/eduardo-araujo-33a1a2278/">Eduardo Araujo </a>
 
