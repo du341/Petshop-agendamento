@@ -6,44 +6,69 @@
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-  display: block;
-  height: auto;
-  min-height: 100vh;
-  padding: 30px 0;
+      display: block;
+      height: auto;
+      min-height: 100vh;
+      padding: 30px 0;
     }   
+
     .card {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 15px 0;
-    width: 100%;
-    max-width: 500px;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px 0;
+      width: 100%;
+      max-width: 500px;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: left;
     }
 
     .card img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-top: 10px;
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
     }
 
     #listaAgendamentos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin-top: 30px;
     }
+
     .container {
-     width: 100%;
-     max-width: 700px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
+      width: 100%;
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .botoes-agendamento {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .botoes-agendamento button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .botoes-agendamento button:nth-child(1) {
+      background-color: #007bff;
+    }
+
+    .botoes-agendamento button:nth-child(2) {
+      background-color: #dc3545;
     }
   </style>
 </head>
@@ -75,18 +100,73 @@
           const div = document.createElement('div');
           div.className = 'card';
           div.innerHTML = `
-            <strong> Pet:</strong> ${item.nome_pet}<br>
-            <strong> Raça:</strong> ${item.raca}<br>
-            <strong> Data:</strong> ${item.data_banho}<br>
-            <strong> Horário:</strong> ${item.horario}<br>
-            <strong> Observações:</strong> ${item.observacoes}<br>
+            <strong>Pet:</strong> ${item.nome_pet}<br>
+            <strong>Raça:</strong> ${item.raca}<br>
+            <strong>Data:</strong> ${item.data_banho}<br>
+            <strong>Horário:</strong> ${item.horario}<br>
+            <strong>Observações:</strong> ${item.observacoes}<br>
             <img src="${item.imagem_url}" alt="Foto do pet">
+            <div class="botoes-agendamento">
+              <button onclick="editarAgendamento(${item.id})">Editar</button>
+              <button onclick="excluirAgendamento(${item.id})">Excluir</button>
+            </div>
           `;
           container.appendChild(div);
         });
       } catch (erro) {
         console.error(erro);
         alert('Erro ao carregar agendamentos.');
+      }
+    }
+
+    async function excluirAgendamento(id) {
+      const token = localStorage.getItem('token');
+      if (!token) return alert('Você precisa estar logado.');
+
+      const confirmar = confirm("Tem certeza que deseja excluir o agendamento?");
+      if (!confirmar) return;
+
+      const resposta = await fetch(`http://localhost:3000/api/agendamentos/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        alert(dados.mensagem);
+        location.reload();
+      } else {
+        alert(dados.erro || 'Erro ao excluir agendamento.');
+      }
+    }
+
+    async function editarAgendamento(id) {
+      const nome_pet = prompt("Novo nome do pet:");
+      const raca = prompt("Nova raça:");
+      const data_banho = prompt("Nova data (AAAA-MM-DD):");
+      const horario = prompt("Novo horário (HH:MM):");
+      const observacoes = prompt("Novas observações:");
+      const token = localStorage.getItem('token');
+
+      const resposta = await fetch(`http://localhost:3000/api/agendamentos/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        },
+        body: JSON.stringify({ nome_pet, raca, data_banho, horario, observacoes })
+      });
+
+      const dados = await resposta.json();
+
+      if (resposta.ok) {
+        alert('Agendamento atualizado com sucesso!');
+        location.reload();
+      } else {
+        alert(dados.erro || dados.mensagem || 'Erro ao atualizar.');
       }
     }
 
